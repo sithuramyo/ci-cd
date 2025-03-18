@@ -26,6 +26,9 @@ jobs:
         id: get_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+      - name: Debug Version
+        run: echo "Deploying version: $VERSION"
+
       - name: Build and push Docker image
         run: |
           docker build -t sithuramyo/cicd:$VERSION -f github-action/Dockerfile .
@@ -33,7 +36,7 @@ jobs:
           docker tag sithuramyo/cicd:$VERSION sithuramyo/cicd:latest
           docker push sithuramyo/cicd:latest
 
-      # ✅ Step to manually set up SSH key for secure login
+      # ✅ Set up SSH key for secure login
       - name: Set Up SSH Key
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' > private_key.pem
@@ -41,11 +44,15 @@ jobs:
           ls -lah  # Debug: Check if the key file exists
           cat private_key.pem | head -n 5  # Debug: Print first 5 lines
 
-
-      # ✅ Deploy using SSH
+      # ✅ Deploy to EC2 using SSH
       - name: Deploy to EC2
+        env:
+          VERSION: ${{ github.ref_name }}  # Pass the version as an environment variable
         run: |
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@${{ secrets.EC2_HOST }} << EOF
+            echo "Extracting version from Docker Hub..."
+            echo "Deploying version: $VERSION"
+
             echo "Pulling the latest version of the API..."
             docker pull sithuramyo/cicd:$VERSION
 
