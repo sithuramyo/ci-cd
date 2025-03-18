@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t sithuramyo/cicd:$VERSION .
+          docker build -t sithuramyo/cicd:$VERSION -f github-action/Dockerfile .
           docker push sithuramyo/cicd:$VERSION
           docker tag sithuramyo/cicd:$VERSION sithuramyo/cicd:latest
           docker push sithuramyo/cicd:latest
