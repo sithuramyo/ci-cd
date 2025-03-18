@@ -1,0 +1,54 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.vs
+.vscode/
+
+# Ignore temporary and system files
+*.swp
+*.sln.ide
+Thumbs.db
+.DS_Store
+
+# Ignore logs and lock files
+logs/
+*.log
+*.lock
+
+# Ignore environment and secret files
+.env
+secrets.json
+
+# Ignore Docker build files
+docker-compose.override.yml
+docker-compose.debug.yml
+.dockerignore
+
+# Ignore GitHub Actions cache
+.github/workflows/*.log
+.github/workflows/*.cache
+
+# Ignore dependencies (optional)
+.nuget/
+packages/
+
+# Ignore test results
+TestResults/
+coverage/
+coverage.info
+*.trx
+*.coverage
+*.cov
+
+# Ignore Nginx config (if using)
+nginx.conf
+
+# Ignore JetBrains IDE files
+.idea/
+
+# Ignore Rider and VS Code settings
+*.code-workspace
