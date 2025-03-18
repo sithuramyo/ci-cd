@@ -27,7 +27,7 @@ jobs:
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - name: Debug Version
-        run: echo "Deploying version: $VERSION"
+        run: echo "Deploying version:$VERSION"
 
       - name: Build and push Docker image
         run: |
