@@ -50,8 +50,8 @@ jobs:
             docker pull sithuramyo/cicd:$VERSION
 
             echo "Stopping and removing old container (if running)..."
-            docker stop my-api-container || true
-            docker rm my-api-container || true
+            docker stop ci-cd-container || true
+            docker rm ci-cd-container || true
 
             echo "Starting new API container..."
             docker run -d --name ci-cd-container -p 80:80 sithuramyo/cicd:$VERSION
