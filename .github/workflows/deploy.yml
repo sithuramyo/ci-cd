@@ -36,9 +36,10 @@ jobs:
       # ✅ Step to manually set up SSH key for secure login
       - name: Set Up SSH Key
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > ci-cd.pem
-          chmod 600 ci-cd.pem
-          ls -lah  # Check if the file exists (for debugging)
+          echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' > private_key.pem
+          chmod 600 private_key.pem
+          ls -lah  # Debug: Check if the key file exists
+          cat private_key.pem | head -n 5  # Debug: Print first 5 lines
 
 
       # ✅ Deploy using SSH
